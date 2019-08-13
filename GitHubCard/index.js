@@ -32,7 +32,19 @@ axios.get('https://api.github.com/users/cladams0203')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach((name) => {
+    axios.get(`https://api.github.com/users/${name}`)
+        .then(response => {
+            const cards = document.querySelector('.cards')
+            cards.appendChild(
+                gitCard(response.data.avatar_url, response.data.name, response.data.login, response.data.location, response.data.html_url, response.data.followers, response.data.following, response.data.bio)
+            )
+        })
+        .catch(err => console.log(err))
+})
+
 function gitCard(image, name, username, location, github, followers, following, bio) {
     const cardContainer = document.createElement('div')
     cardContainer.classList.add('card')
