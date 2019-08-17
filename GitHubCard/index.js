@@ -51,7 +51,7 @@ followersArray.forEach((name) => {
     2.  An event is something that happens with user action or state of page changes
     3.  an event listener waits for a specific event to occur on an element and when it does runs a block of code.
     4.  To use array methods and other code that doesn't work with the node list
-
+    5.  A component is a reusable block of code.
  */
 
 function txtElement (element, text) {
