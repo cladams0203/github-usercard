@@ -37,6 +37,7 @@ const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigkne
 followersArray.forEach((name) => {
     axios.get(`https://api.github.com/users/${name}`)
         .then(response => {
+         
             const cards = document.querySelector('.cards')
             cards.appendChild(
                 gitCard(response.data.avatar_url, response.data.name, response.data.login, response.data.location, response.data.html_url, response.data.followers, response.data.following, response.data.bio)
@@ -44,6 +45,37 @@ followersArray.forEach((name) => {
         })
         .catch(err => console.log(err))
 })
+
+/*
+    1.  Document Object Model.  Mutable interface between browser and user visual output
+    2.  An event is something that happens with user action or state of page changes
+    3.  an event listener waits for a specific event to occur on an element and when it does runs a block of code.
+    4.  To use array methods and other code that doesn't work with the node list
+
+ */
+
+function txtElement (element, text) {
+    const parent = document.createElement(element)
+    parent.textContent = text
+    return parent
+}
+
+function imgElement (imgsrc) {
+    const imgElement = document.createElement('img')
+    imgElement.src = imgsrc
+    return imgElement
+}
+
+function linkTag (tagRef, text) {
+    const aTag = document.createElement('a')
+    aTag.href = tagRef
+    aTag.textContent = text
+    return aTag
+}
+
+function addClass (element, classadd) {
+    element.classList.add(classadd)
+}
 
 function gitCard(image, name, username, location, github, followers, following, bio) {
     const cardContainer = document.createElement('div')
