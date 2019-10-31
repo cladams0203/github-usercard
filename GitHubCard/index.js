@@ -2,6 +2,14 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios.get('https://api.github.com/users/cladams0203')
+    .then(response => {
+        const cards = document.querySelector('.cards')
+        cards.appendChild(
+        gitCard(response.data.avatar_url, response.data.name, response.data.login, response.data.location, response.data.html_url, response.data.followers, response.data.following, response.data.bio)
+        )
+    })
+    .catch(err => console.log(err))
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -24,7 +32,91 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach((name) => {
+    axios.get(`https://api.github.com/users/${name}`)
+        .then(response => {
+         
+            const cards = document.querySelector('.cards')
+            cards.appendChild(
+                gitCard(response.data.avatar_url, response.data.name, response.data.login, response.data.location, response.data.html_url, response.data.followers, response.data.following, response.data.bio)
+            )
+        })
+        .catch(err => console.log(err))
+})
+
+/*
+    1.  Document Object Model.  Mutable interface between browser and user visual output
+    2.  An event is something that happens with user action or state of page changes
+    3.  an event listener waits for a specific event to occur on an element and when it does runs a block of code.
+    4.  To use array methods and other code that doesn't work with the node list
+    5.  A component is a reusable block of code.
+ */
+
+function txtElement (element, text) {
+    const parent = document.createElement(element)
+    parent.textContent = text
+    return parent
+}
+
+function imgElement (imgsrc) {
+    const imgElement = document.createElement('img')
+    imgElement.src = imgsrc
+    return imgElement
+}
+
+function linkTag (tagRef, text) {
+    const aTag = document.createElement('a')
+    aTag.href = tagRef
+    aTag.textContent = text
+    return aTag
+}
+
+function addClass (element, classadd) {
+    element.classList.add(classadd)
+}
+
+function gitCard(image, name, username, location, github, followers, following, bio) {
+    const cardContainer = document.createElement('div')
+    cardContainer.classList.add('card')
+    const userImage = document.createElement('img')
+    userImage.src = image
+    const infoContainer = document.createElement('div')
+    infoContainer.classList.add('card-info')
+    const heading = document.createElement('h3')
+    heading.classList.add('name')
+    heading.textContent = name
+    const uName = document.createElement('p')
+    uName.classList.add('username')
+    uName.textContent = username
+    const userLocation = document.createElement('p')
+    userLocation.textContent = `Location: ${location}`
+    const profile = document.createElement('p')
+    profile.textContent = `Profile: `
+    const link = document.createElement('a')
+    link.setAttribute('href', github)
+    link.textContent = github
+    const follower = document.createElement('p')
+    follower.textContent = `Followers: ${followers}`
+    const follow = document.createElement('p')
+    follow.textContent = `Following: ${following}`
+    const userBio = document.createElement('p')
+    userBio.textContent = `Bio: ${bio}`
+    cardContainer.appendChild(userImage)
+    cardContainer.appendChild(infoContainer)
+    infoContainer.appendChild(heading)
+    infoContainer.appendChild(uName)
+    infoContainer.appendChild(userLocation)
+    infoContainer.appendChild(profile)
+    profile.appendChild(link)
+    infoContainer.appendChild(follower)
+    infoContainer.appendChild(follow)
+    infoContainer.appendChild(userBio)
+
+    return cardContainer
+
+}
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
